@@ -22,83 +22,81 @@
         }
 
         .message-container {
-            position: absolute;
-            top: -100%;
+            position: fixed;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translate(-50%, -50%);
             width: 90%;
-            max-width: 600px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: slideDown 8s ease-in-out forwards;
+            max-width: 800px;
+            text-align: center;
         }
 
-        @keyframes slideDown {
+        .message-line {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            font-size: 2rem;
+            font-weight: 600;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            white-space: nowrap;
+        }
+
+        .message-line.animate {
+            animation: slideDownLine 3s ease-in-out forwards;
+        }
+
+        @keyframes slideDownLine {
             0% {
-                top: -100%;
+                top: -100px;
                 opacity: 0;
             }
-            15% {
-                top: 50%;
-                transform: translate(-50%, -50%);
+            20% {
                 opacity: 1;
             }
-            85% {
-                top: 50%;
-                transform: translate(-50%, -50%);
+            80% {
                 opacity: 1;
             }
             100% {
-                top: 150%;
+                top: calc(100vh + 100px);
                 opacity: 0;
+            }
+        }
+
+        .big-love {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 15rem;
+            opacity: 0;
+            z-index: 100;
+        }
+
+        .big-love.show {
+            animation: loveBurst 2s ease-out forwards;
+        }
+
+        @keyframes loveBurst {
+            0% {
+                transform: translate(-50%, -50%) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1) rotate(360deg);
+                opacity: 1;
             }
         }
 
         .message-content {
             text-align: center;
-        }
-
-        .message-title {
-            font-family: 'Pacifico', cursive;
-            font-size: 2.5rem;
-            color: #667eea;
-            margin-bottom: 20px;
-            animation: fadeIn 1s ease-in 0.5s both;
-        }
-
-        .message-text {
-            font-size: 1.3rem;
-            color: #333;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            animation: fadeIn 1s ease-in 1s both;
-        }
-
-        .message-emoji {
-            font-size: 3rem;
-            animation: bounce 1s ease-in 1.5s both;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
         }
 
         /* Floating particles */
@@ -222,29 +220,56 @@
     <!-- Message container -->
     <div class="message-container">
         <div class="message-content">
-            <h1 class="message-title">Special Message</h1>
-            <p class="message-text">
-                This is your special message! 💕<br>
-                You can customize this text to say anything you want.<br>
-                Make it personal, make it meaningful!
-            </p>
-            <div class="message-emoji">✨💖✨</div>
+            <div class="message-line" data-delay="0">Hai Sayang 💕</div>
+            <div class="message-line" data-delay="3">Aku punya sesuatu untuk kamu</div>
+            <div class="message-line" data-delay="6">Kamu sangat istimewa dalam</div>
+            <div class="message-line" data-delay="9">Dan aku ingin kamu tahu</div>
+            <div class="message-line" data-delay="12">Bahwa kamu berarti segalanya</div>
+            <div class="message-line" data-delay="15">Untuk hidupku ✨</div>
         </div>
     </div>
+
+    <!-- Big love that appears at the end -->
+    <div class="big-love">❤️</div>
 
     <!-- Replay button -->
     <button class="replay-button" onclick="replayAnimation()">🔄 Replay</button>
 
     <script>
-        function replayAnimation() {
-            const messageContainer = document.querySelector('.message-container');
-            // Remove animation
-            messageContainer.style.animation = 'none';
-            // Trigger reflow
-            messageContainer.offsetHeight;
-            // Re-add animation
-            messageContainer.style.animation = 'slideDown 8s ease-in-out forwards';
+        let animationTimeout;
+        
+        function startAnimation() {
+            const lines = document.querySelectorAll('.message-line');
+            const bigLove = document.querySelector('.big-love');
+            
+            // Reset all animations
+            lines.forEach(line => {
+                line.classList.remove('animate');
+            });
+            bigLove.classList.remove('show');
+            
+            // Start line animations
+            lines.forEach((line, index) => {
+                const delay = parseFloat(line.getAttribute('data-delay')) * 1000;
+                setTimeout(() => {
+                    line.classList.add('animate');
+                }, delay);
+            });
+            
+            // Show big love at the end (after all lines have passed)
+            const totalDelay = parseFloat(lines[lines.length - 1].getAttribute('data-delay')) * 1000 + 3000;
+            animationTimeout = setTimeout(() => {
+                bigLove.classList.add('show');
+            }, totalDelay);
         }
+
+        function replayAnimation() {
+            clearTimeout(animationTimeout);
+            startAnimation();
+        }
+
+        // Start animation on page load
+        window.addEventListener('load', startAnimation);
     </script>
 </body>
 </html>
