@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message for You</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .message-container {
+            position: absolute;
+            top: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideDown 8s ease-in-out forwards;
+        }
+
+        @keyframes slideDown {
+            0% {
+                top: -100%;
+                opacity: 0;
+            }
+            15% {
+                top: 50%;
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+            85% {
+                top: 50%;
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+            100% {
+                top: 150%;
+                opacity: 0;
+            }
+        }
+
+        .message-content {
+            text-align: center;
+        }
+
+        .message-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in 0.5s both;
+        }
+
+        .message-text {
+            font-size: 1.3rem;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in 1s both;
+        }
+
+        .message-emoji {
+            font-size: 3rem;
+            animation: bounce 1s ease-in 1.5s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        .particle:nth-child(1) {
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            left: 30%;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(3) {
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        .particle:nth-child(4) {
+            left: 70%;
+            animation-delay: 1s;
+        }
+
+        .particle:nth-child(5) {
+            left: 90%;
+            animation-delay: 3s;
+        }
+
+        @keyframes float {
+            0% {
+                top: -10px;
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                top: 100vh;
+                opacity: 0;
+            }
+        }
+
+        /* Replay button */
+        .replay-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-family: 'Quicksand', sans-serif;
+            z-index: 1000;
+        }
+
+        .replay-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .replay-button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Back button */
+        .back-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-family: 'Quicksand', sans-serif;
+            z-index: 1000;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating particles for decoration -->
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+
+    <!-- Back button -->
+    <a href="index.html" class="back-button">← Back</a>
+
+    <!-- Message container -->
+    <div class="message-container">
+        <div class="message-content">
+            <h1 class="message-title">Special Message</h1>
+            <p class="message-text">
+                This is your special message! 💕<br>
+                You can customize this text to say anything you want.<br>
+                Make it personal, make it meaningful!
+            </p>
+            <div class="message-emoji">✨💖✨</div>
+        </div>
+    </div>
+
+    <!-- Replay button -->
+    <button class="replay-button" onclick="replayAnimation()">🔄 Replay</button>
+
+    <script>
+        function replayAnimation() {
+            const messageContainer = document.querySelector('.message-container');
+            // Remove animation
+            messageContainer.style.animation = 'none';
+            // Trigger reflow
+            messageContainer.offsetHeight;
+            // Re-add animation
+            messageContainer.style.animation = 'slideDown 8s ease-in-out forwards';
+        }
+    </script>
+</body>
+</html>
